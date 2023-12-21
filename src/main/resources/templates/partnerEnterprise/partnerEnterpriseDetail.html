@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>外部取引先企業詳細</title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/detail.css}" rel="stylesheet">
+    <link th:href="@{/css/map.css}" rel="stylesheet">
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="left">
+			<h3><b>外部取引先企業詳細</b></h3>
+		</div>
+		
+		<div class="contentControl">
+			
+			<div class="contentLeft">
+				
+			<div class="detail" th:object="${partnerEnterprise}">
+			<table class="table">
+				<thead>
+    				<tr>
+      					<th scope="col">項目</th>
+      					<th scope="col">値</th>
+    				</tr>
+  				</thead>
+  				
+				<tr>
+					<td>外部取引先企業ID</td>
+					<td th:text="*{enterprise_id}"></td>
+				</tr>
+				<tr>
+					<td>企業名</td>
+					<td th:text="*{enterprisename}"></td>
+				</tr>
+				<tr>
+					<td>郵便番号</td>
+					<td th:text="*{postalcode}"></td>
+				</tr>
+				<tr>
+					<td>所在地</td>
+					<td th:text="*{address}"></td>
+				</tr>
+				<tr>
+					<td>地図</td>
+					<td class="map"> 
+						<div id="map"></div>
+  						<div id="error-message" style="color: red;"></div>
+					</td>
+				</tr>
+				<tr>
+					<td>設立年月日</td>
+					<td th:text="*{foundnationdate}"></td>
+				</tr>
+				<tr>
+					<td>代表者氏名</td>
+					<td th:text="*{chiefname}"></td>
+				</tr>
+				<tr>
+					<td>資本金</td>
+					<td th:text="*{capital}"></td>
+				</tr>
+				<tr>
+					<td>法人番号</td>
+					<td th:text="*{corporatenumber}"></td>
+				</tr>
+				<tr>
+					<td>従業員数</td>
+					<td th:text="*{employees}"></td>
+				</tr>
+				<tr>
+					<td>事業区分</td>
+					<td th:text="*{businesstype.businesstype}"></td>
+				</tr>
+				<tr>
+					<td>事業詳細</td>
+					<td th:text="*{businessdetail}"></td>
+				</tr>
+				<tr>
+					<td>取引先ランク</td>
+					<td th:text="*{partnerenterpriserank.partnerenterpriserankdetail}"></td>
+				</tr>
+				<tr>
+					<td>企業メールアドレス</td>
+					<td th:text="*{enterpriseemail}"></td>
+				</tr>
+				<tr>
+					<td>企業電話番号</td>
+					<td th:text="*{enterprisenumber}"></td>
+				</tr>
+				<tr>
+					<td>ホームページ</td>
+					<td><a th:href="@{*{homepage}}" th:text="*{enterprisename}"></a></td>
+				</tr>
+				<tr>
+					<td>主要担当企業</td>
+					<td><a th:href="@{/entryEnterprise/detail/{enterprise_id}(enterprise_id=${partnerEnterprise.mainenterprise_id})}" th:text="*{mainenterprise.enterprisename}"></a></td>
+				</tr>
+				
+			</table>
+
+    	
+  
+  <script type="text/javascript" th:inline="javascript">
+    function geocodeAddress(geocoder, map, address) {
+    	geocoder.geocode({ 'address': address }, function(results, status) {
+        if (status === 'OK') {
+          	var location = results[0].geometry.location;
+          	
+          	var mapOptions = {
+            	center: location,
+            	zoom: 15
+          	};
+          
+          	var map = new google.maps.Map(document.getElementById('map'), mapOptions);
+     
+          	var marker = new google.maps.Marker({
+            	map: map,
+            	position: location
+          	});
+          
+    	  	infoWindow = new google.maps.InfoWindow({ 
+        		content: [[*{enterprisename}]] 
+  		  	});
+  		
+  		 	marker.addListener('click', function() { 
+     			infoWindow.open(map, marker);
+    		});
+    		
+        } else {
+          	var errorMessage = "位置情報取得に失敗しました。 "
+          	document.getElementById('error-message').textContent = errorMessage;
+        }
+      });
+    }
+
+    // 初期化
+    function initMap() {
+    	var geocoder = new google.maps.Geocoder();
+      	var address = [[*{address}]]; 
+      	geocodeAddress(geocoder, map, address);
+    }
+  </script>
+  
+
+		</div>
+				
+			</div>
+			
+			<div class="contentRight">
+				
+				<div class="card" style="width: 18rem;" th:object="${partnerEnterprise}">
+  					<ul class="list-group list-group-flush">
+						<li class="list-group-item">
+							<a type="button" th:href="@{/workrecord/partnerEnterprise/{partnerenterprise_id}(partnerenterprise_id=*{enterprise_id})}" class="btn btn-outline-secondary w-100">活動記録</a>
+						</li>
+						<li class="list-group-item">
+							<a type="button" th:href="@{/partnerEnterprisePurchase/partnerEnterprise/{partnerenterprise_id}(partnerenterprise_id=*{enterprise_id})}" class="btn btn-outline-secondary w-100">外部取引先企業購買</a>
+						</li>
+						<li class="list-group-item">
+							<a type="button" th:href="@{/partnerEnterpriseSales/partnerEnterprise/{partnerenterprise_id}(partnerenterprise_id=*{enterprise_id})}" class="btn btn-outline-secondary w-100">外部取引先企業販売</a>
+						</li>
+						<li class="list-group-item">
+							<a type="button" th:href="@{/partnerUser/partnerEnterprise/{partnerenterprise_id}(partnerenterprise_id=*{enterprise_id})}" class="btn btn-outline-secondary w-100">外部企業人材</a>
+						</li>
+						
+  					</ul>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+    </div>
+
+</body>
+
+</html>

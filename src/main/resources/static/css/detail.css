@@ -1,0 +1,43 @@
+@charset "UTF-8";
+
+td {
+  width: 40%;
+  margin: 5px;
+  word-break: break-word;
+}
+
+table{
+	margin-top : 20px ;
+}
+
+.left{
+	margin-top : 10px ;
+}
+
+.contentControl{
+	display: flex;
+	justify-content: space-between;
+}
+
+.contentLeft{
+	margin : 10px ;
+	width : 80%;
+}
+
+.contentRight{
+	margin : 10px;
+}
+
+.card{
+	margin-top:20px;
+	width : 10%;
+	text-align :center;
+}
+
+.masterData{
+	display: flex;
+	justify-content: center;
+	text-align :center;
+}
+
+

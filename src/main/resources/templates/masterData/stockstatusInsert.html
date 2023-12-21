@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/insert.css}" rel="stylesheet">
+	<script th:src="@{/js/confirmPop.js}"></script>
+     
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="contentControl">
+			<div class="card">
+  				<div class="card-body">
+    					
+    				<h4 class="text-info" th:text="${title}"></h4>
+    				
+    				<form action="#" th:action="${stockstatusForm.newStockstatus}?@{/masterData/stockstatus/insert}:@{/masterData/stockstatus/update}" method="POST" th:object="${stockstatusForm}">
+						
+						<div class="mb-3">
+							<label for="stockstatus" class="form-label">在庫状態<span class="text-danger">*</span></label>
+  							<input type="text" class="form-control" id="stockstatus" placeholder="在庫状態" name="stockstatus" th:value="*{stockstatus}">
+  							<div th:if="${#fields.hasErrors('stockstatus')}" th:errors="*{stockstatus}" class="text-danger"></div><br>
+						</div>
+						
+						<input th:if="${stockstatus_id}" type="hidden" name="stockstatus_id" th:value="${stockstatus_id}">
+						
+						<div th:if="${stockstatusForm.newStockstatus}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="登録">
+							</div>
+						</div>
+						
+						<div th:if="${!stockstatusForm.newStockstatus}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="更新" onclick="return confirmDelete('更新しますか？');">
+							</div>
+						</div>
+						
+					</form>
+					
+					<div th:if="${!stockstatusForm.newStockstatus}" class="delete">
+						<form  action="#" th:action="@{/masterData/stockstatus/delete}" method="POST">
+							<input type="hidden" name="stockstatus_id" th:value="${stockstatus_id}">
+							<input type="submit" class="btn btn-danger w-50" value="削除" onclick="return confirmDelete('削除しますか？');">
+						</form>
+					</div>
+    					
+  				</div>
+			</div>
+		</div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>500InternalServerError</title>
+
+<link rel="icon" th:href="@{/icon/ForestLink.ico}">
+<link th:href="@{/css/content.css}" rel="stylesheet">
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+
+</head>
+<body>
+	
+	<div th:replace="~{block/bar}"></div>
+	<div class="content">
+		<h3>500InternalServerError：処理中にエラーが発生しました</h3>
+		<a th:href="@{/home}">ホームへ戻る</a>
+	</div>
+
+</body>
+</html>

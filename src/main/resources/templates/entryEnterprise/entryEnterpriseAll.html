@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>参加企業一覧</title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/list.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="flex">
+			
+			<div class="left">
+				<h3><b>参加企業一覧</b></h3>
+				<p th:text="${complete}" class="text-info"></p>
+				<p th:text="${enterpriseCount}"></p>
+			</div>
+			
+			<div class="right" sec:authorize="hasAuthority('admin')">
+				<a type="button" th:href="@{/entryEnterprise/insert}" class="btn btn-info">新規参加企業作成</a>
+			</div>
+			
+		</div>
+		
+		<div class="contentControl">
+						
+			<div class="contentLeft">
+				
+				<table class="table table-striped">
+					<thead>
+    					<tr>
+      						<th scope="col">ID</th>
+      						<th scope="col">企業名</th>
+      						<th scope="col">事業区分</th>
+      						<th scope="col">詳細</th>
+      						<th scope="col" sec:authorize="hasAuthority('admin')">更新</th>
+    					</tr>
+    			
+    					<tr th:each="enterpriseList:${enterpriseList}">
+							<td th:text="${enterpriseList.enterprise_id}"></td>
+							<td th:text="${enterpriseList.enterprisename}"></td>
+							<td th:text="${enterpriseList.businesstype.businesstype}"></td>
+							<td><a type="button" th:href="@{/entryEnterprise/detail/{enterprise_id}(enterprise_id=${enterpriseList.enterprise_id})}" class="btn btn-outline-primary">詳細</a></td>
+							<td><a type="button" th:href="@{/entryEnterprise/update/{enterprise_id}(enterprise_id=${enterpriseList.enterprise_id})}" class="btn btn-outline-success" sec:authorize="hasAuthority('admin')">更新</a></td>
+						</tr>
+  					</thead>
+				</table>
+			</div>
+			
+			
+			<div class="contentRight">
+				<div class="card" style="width: 18rem;">
+  					<div class="card-header">
+    					<b>絞り込み検索</b>
+  					</div>
+  					<div class="card-body">
+    					
+    					<form action="#" th:action="@{/filteredEntryEnterprise}" th:object="${enterpriseFilter}">
+					
+							<div class="mb-3">
+								<label for="businesstype_id" class="form-label">事業区分</label>
+								<select class="form-control" id="businesstype_id" name="businesstype_id">
+  									<option value="0">すべて</option>
+  									<option th:each="businesstype:${businesstypeList}" 
+										th:value="${businesstype.businesstype_id}" 
+										th:text="${businesstype.businesstype}" 
+										th:selected="${enterpriseFilter.businesstype_id == businesstype.businesstype_id}">
+									</option>
+								</select>
+							</div>
+							
+							<div class="text-center">
+								<input type="submit" class="btn btn-primary w-50" value="絞り込み検索">
+							</div>
+							
+						</form>
+    					
+  					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>参加企業内取引一覧</title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/list.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="flex">
+			
+			<div class="left">
+				<h3><b>参加企業内取引一覧</b></h3>
+				<p th:text="${complete}" class="text-info"></p>
+				<p th:text="${tradingCount}"></p>
+			</div>
+			
+			<div class="right">
+				<a type="button" th:href="@{/entryTrading/insert}" class="btn btn-info">新規参加企業内取引作成</a>
+			</div>
+			
+		</div>
+		
+		<div class="contentControl">
+						
+			<div class="contentLeft">
+				
+				<table class="table table-striped">
+					<thead>
+    					<tr>
+      						<th scope="col">ID</th>
+      						<th scope="col">製品ID</th>
+      						<th scope="col">発注(受注)日</th>
+      						<th scope="col">仕入(納品)日</th>
+      						<th scope="col">詳細</th>
+      						<th scope="col">更新</th>
+    					</tr>
+    			
+    					<tr th:each="trading:${tradingList}">
+							<td th:text="${trading.trading_id}"></td>
+							<td><a th:href="@{/product/detail/{product_id}(product_id=${trading.product_id})}" th:text="${trading.product_id}"></a></td>
+							<td th:text="${trading.orderday}"></td>
+							<td th:text="${trading.purchaseday}"></td>
+							<td><a type="button" th:href="@{/entryTrading/detail/{trading_id}(trading_id=${trading.trading_id})}" class="btn btn-outline-primary">詳細</a></td>
+							<td><a type="button" th:href="@{/entryTrading/update/{trading_id}(trading_id=${trading.trading_id})}" class="btn btn-outline-success">更新</a></td>
+						</tr>
+  					</thead>
+				</table>
+			</div>
+			
+			
+			<div class="contentRight">
+				<div class="card" style="width: 18rem;">
+  					<div class="card-header">
+    					<b>絞り込み検索</b>
+  					</div>
+  					<div class="card-body">
+    					
+    					<form action="#" th:action="@{/filteredEntryTrading}" th:object="${tradingFilter}">
+					
+							<div class="mb-3">
+								<label for="purchaseenterprise_id" class="form-label">購買参加企業</label>
+								<select class="form-control" id="purchaseenterprise_id" name="purchaseenterprise_id">
+  									<option value="0">すべて</option>
+  									<option th:each="enterprise:${enterpriseList}" 
+										th:value="${enterprise.enterprise_id}" 
+										th:text="${enterprise.enterprisename}" 
+										th:selected="${tradingFilter.purchaseenterprise_id == enterprise.enterprise_id}">
+									</option>
+								</select>
+							</div>
+							
+							<div class="mb-3">
+								<label for="salesenterprise_id" class="form-label">販売参加企業</label>
+								<select class="form-control" id="salesenterprise_id" name="salesenterprise_id">
+  									<option value="0">すべて</option>
+  									<option th:each="enterprise:${enterpriseList}" 
+										th:value="${enterprise.enterprise_id}" 
+										th:text="${enterprise.enterprisename}" 
+										th:selected="${tradingFilter.salesenterprise_id == enterprise.enterprise_id}">
+									</option>
+								</select>
+							</div>
+							
+							<div class="text-center">
+								<input type="submit" class="btn btn-primary w-50" value="絞り込み検索">
+							</div>
+							
+						</form>
+    					
+  					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+    </div>
+
+</body>
+
+</html>

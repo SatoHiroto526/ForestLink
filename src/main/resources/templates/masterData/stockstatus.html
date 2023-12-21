@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>在庫状態一覧</title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/list.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="flex">
+			
+			<div class="left">
+				<h3><b>在庫状態一覧</b></h3>
+				<p th:text="${complete}" class="text-info"></p>
+				<p th:text="${stockstatusCount}"></p>
+			</div>
+			
+			<div class="right">
+				<a type="button" th:href="@{/masterData/stockstatus/insert}" class="btn btn-info">新規在庫状態作成</a>
+			</div>
+			
+		</div>
+		
+		<div class="contentControl">	
+			<table class="table table-striped">
+				<thead>
+    				<tr>
+      					<th scope="col">ID</th>
+      					<th scope="col">在庫状態</th>
+      					<th scope="col">更新</th>
+    				</tr>
+    			
+    				<tr th:each="stockstatus:${stockstatusList}">
+						<td th:text="${stockstatus.stockstatus_id}"></td>
+						<td th:text="${stockstatus.stockstatus}"></td>
+						<td><a type="button" th:href="@{/masterData/stockstatus/update/{stockstatus_id}(stockstatus_id=${stockstatus.stockstatus_id})}" class="btn btn-outline-success">更新</a></td>
+					</tr>
+  				</thead>
+			</table>
+		</div>
+		
+    </div>
+
+</body>
+
+</html>

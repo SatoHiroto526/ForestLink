@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/insert.css}" rel="stylesheet">
+	<script th:src="@{/js/confirmPop.js}"></script>
+     
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="contentControl">
+			<div class="card">
+  				<div class="card-body">
+    					
+    				<h4 class="text-info" th:text="${title}"></h4>
+    				
+    				<form action="#" th:action="${stockForm.newStock}?@{/stock/insert}:@{/stock/update}" method="POST" th:object="${stockForm}">
+						
+						<div class="mb-3">
+							<label for="enterprise_id" class="form-label">所有参加企業<span class="text-danger">*</span></label>
+							<select class="form-control" id="enterprise_id" name="enterprise_id">
+  								<option th:each="enterprise:${enterpriseList}" 
+										th:value="${enterprise.enterprise_id}" 
+										th:text="${enterprise.enterprisename}" 
+										th:selected="${stockForm.enterprise_id == enterprise.enterprise_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('enterprise_id')}" th:errors="*{enterprise_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="product_id" class="form-label">製品<span class="text-danger">*</span></label>
+							<select class="form-control" id="product_id" name="product_id">
+  								<option th:each="product:${productList}" 
+										th:value="${product.product_id}" 
+										th:text="${product.product_id}" 
+										th:selected="${stockForm.product_id == product.product_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('product_id')}" th:errors="*{product_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="stocktype" class="form-label">在庫種別<span class="text-danger">*</span></label>
+							<select class="form-control" id="stocktype" name="stocktype">
+  								<option th:each="stocktype:${stocktypeList}" 
+										th:value="${stocktype.stocktype}" 
+										th:text="${stocktype.stocktype}" 
+										th:selected="${stockForm.stocktype == stocktype.stocktype}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('stocktype')}" th:errors="*{stocktype}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="stockstatus_id" class="form-label">在庫状態<span class="text-danger">*</span></label>
+							<select class="form-control" id="stockstatus_id" name="stockstatus_id">
+  								<option th:each="stockstatus:${stockstatusList}" 
+										th:value="${stockstatus.stockstatus_id}" 
+										th:text="${stockstatus.stockstatus}" 
+										th:selected="${stockForm.stockstatus_id == stockstatus.stockstatus_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('stockstatus_id')}" th:errors="*{stockstatus_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="liabilityuser_id" class="form-label">責任者ユーザー<span class="text-danger">*</span></label>
+							<select class="form-control" id="liabilityuser_id" name="liabilityuser_id">
+  								<option th:each="liabilityuser:${liabilityuserList}" 
+										th:value="${liabilityuser.user_id}" 
+										th:text="${liabilityuser.username}" 
+										th:selected="${stockForm.liabilityuser_id == liabilityuser.user_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('liabilityuser_id')}" th:errors="*{liabilityuser_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="archive" class="form-label">アーカイブ<span class="text-danger">*</span></label>
+							<select class="form-control" id="archive" name="archive">
+  								<option th:each="archive:${archiveList}" 
+										th:value="${archive.archive}" 
+										th:text="${archive.archive}" 
+										th:selected="${stockForm.archive == archive.archive}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('archive')}" th:errors="*{archive}" class="text-danger"></div><br>
+						</div>
+
+						
+						<input th:if="${stock_id}" type="hidden" name="stock_id" th:value="${stock_id}">
+						
+						<div th:if="${stockForm.newStock}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="登録">
+							</div>
+						</div>
+						
+						<div th:if="${!stockForm.newStock}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="更新" onclick="return confirmDelete('更新しますか？');">
+							</div>
+						</div>
+						
+					</form>
+    					
+  				</div>
+			</div>
+		</div>
+    </div>
+
+</body>
+
+</html>

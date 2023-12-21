@@ -1,0 +1,70 @@
+@charset "UTF-8";
+
+body {
+	margin: 0;
+	padding: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+}
+
+.right-half {
+	width: 50%;
+	position: absolute;
+	top: 0;
+	right: 0;
+	width: 50%;
+	height: 100%;
+	background: url('../picture/forest.jpeg') no-repeat center center;
+	background-size: cover;
+}
+
+.left-half {
+	width: 50%;
+	height: 100%;
+	background-color: #203344;
+	float: left;
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.iconimage {
+	width: 200px;
+	/* 画像の幅を適切なサイズに調整 */
+	height: 200px;
+	/* 画像の高さを適切なサイズに調整 */
+	background-image: url('../picture/ForestLink.jpg');
+	/* 画像のファイルパスを指定 */
+	background-size: cover;
+	/* 画像をカバーするように表示 */
+	background-position: center;
+	/* 画像を中央に配置 */
+}
+
+.login-form {
+	background-color: #F2F2F2;
+	padding: 10px;
+	border-radius: 5px;
+	text-align: center;
+}
+
+.login-form input {
+	width: 70%;
+	padding: 5px;
+	margin: 10px 0;
+	/* 上部のマージンを10pxに設定 */
+	border: none;
+	border-bottom: 1px solid #203344;
+}
+
+.login-form button {
+	width: 50%;
+	padding: 5px;
+	margin: 10px 0;
+	background-color: #203344;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}

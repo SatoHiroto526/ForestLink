@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/logout.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/detail.css}" rel="stylesheet">
+    <script th:src="@{/js/confirmPop.js}"></script>
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="left">
+			<h3><b th:text="${title}"></b></h3>
+		</div>
+
+		<div class="detail" th:object="${productDetail}">
+			<table class="table">
+				<thead>
+    				<tr>
+      					<th scope="col">項目</th>
+      					<th scope="col">値</th>
+    				</tr>
+  				</thead>
+  				
+				<tr>
+					<td>製品ID</td>
+					<td th:text="*{product_id}"></td>
+				</tr>
+				<tr>
+					<td>製品種別</td>
+					<td th:text="*{producttype.producttype}"></td>
+				</tr>
+				<tr>
+					<td>取扱参加企業</td>
+					<td><a th:href="@{/entryEnterprise/detail/{enterprise_id}(enterprise_id=*{enterprise_id})}" th:text="*{entryenterprise.enterprisename}"></a></td>
+				</tr>
+				<tr>
+					<td>品種</td>
+					<td th:text="*{breed.breed}"></td>
+				</tr>
+				<tr>
+					<td>無垢材or集成材</td>
+					<td th:text="*{sawingmethod}"></td>
+				</tr>
+				<tr>
+					<td>丸材or角材</td>
+					<td th:text="*{materialtype}"></td>
+				</tr>
+				<tr>
+					<td>材長(cm)</td>
+					<td th:text="*{length}"></td>
+				</tr>
+				<tr>
+					<td>径級(下)(cm)</td>
+					<td th:text="*{diameter_bottom}"></td>
+				</tr>
+				<tr>
+					<td>径級(上)(cm)</td>
+					<td th:text="*{diameter_top}"></td>
+				</tr>
+				<tr>
+					<td>短辺の長さ(cm)</td>
+					<td th:text="*{length_short}"></td>
+				</tr>
+				<tr>
+					<td>長辺の長さ(cm)</td>
+					<td th:text="*{length_long}"></td>
+				</tr>
+				<tr>
+					<td>JAS規格適合</td>
+					<td th:text="*{jas}"></td>
+				</tr>
+				<tr>
+					<td>製品詳細</td>
+					<td th:text="*{productdetail}"></td>
+				</tr>
+				
+			</table>
+    	</div>
+
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/logout.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/detail.css}" rel="stylesheet">
+    <script th:src="@{/js/confirmPop.js}"></script>
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="left">
+			<h3><b th:text="${title}"></b></h3>
+		</div>
+		
+		<div class="detail" th:object="${userDetail}">
+			<table class="table">
+				<thead>
+    				<tr>
+      					<th scope="col">項目</th>
+      					<th scope="col">値</th>
+    				</tr>
+  				</thead>
+  				
+				<tr>
+					<td>ユーザーID</td>
+					<td th:text="*{user_id}"></td>
+				</tr>
+				<tr>
+					<td>名前</td>
+					<td th:text="*{username}"></td>
+				</tr>
+				<tr>
+					<td>権限</td>
+					<td th:text="*{authority}"></td>
+				</tr>
+				<tr>
+					<td>所属企業</td>
+					<td>
+						<a th:href="@{/entryEnterprise/detail/{enterprise_id}(enterprise_id=*{enterprise_id})}" th:text="*{enterprise.enterprisename}"></a>
+					</td>
+				</tr>
+				<tr>
+					<td>メールアドレス</td>
+					<td th:text="*{useremail}"></td>
+				</tr>
+				<tr>
+					<td>電話番号</td>
+					<td th:text="*{usernumber}"></td>
+				</tr>
+				
+			</table>
+    	</div>
+		
+		<div th:if="${logout}">
+			<form action="#" th:action="@{/logout}" method="POST">
+            	<div class="logout">
+                	<button type="submit" onclick="return confirmDelete('ログアウトしますか？');">ログアウト</button>
+            	</div>
+        	</form>   
+		</div>
+
+    </div>
+
+</body>
+
+</html>

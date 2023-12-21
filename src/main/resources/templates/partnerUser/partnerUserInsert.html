@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/insert.css}" rel="stylesheet">
+	<script th:src="@{/js/confirmPop.js}"></script>
+     
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="contentControl">
+			<div class="card">
+  				<div class="card-body">
+    					
+    				<h4 class="text-info" th:text="${title}"></h4>
+    				
+    				<form action="#" th:action="${partnerUserForm.newUser}?@{/partnerUser/insert}:@{/partnerUser/update}" method="POST" th:object="${partnerUserForm}">
+						
+						<div class="mb-3">
+							<label for="enterprisename" class="form-label">外部取引先人材名<span class="text-danger">*</span></label>
+  							<input type="text" class="form-control" id="username" placeholder="外部取引先人材名" name="username" th:value="*{username}">
+  							<div th:if="${#fields.hasErrors('username')}" th:errors="*{username}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="enterprise_id" class="form-label">所属企業<span class="text-danger">*</span></label>
+							<select class="form-control" id="enterprise_id" name="enterprise_id">
+  								<option th:each="enterprise:${enterpriseList}" 
+									th:value="${enterprise.enterprise_id}" 
+									th:text="${enterprise.enterprisename}" 
+									th:selected="${partnerUserForm.enterprise_id == enterprise.enterprise_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('enterprise_id')}" th:errors="*{enterprise_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="useremail" class="form-label">外部取引先人材メールアドレス</label>
+  							<input type="email" class="form-control" id="useremail" placeholder="外部取引先人材メールアドレス" name="useremail" th:value="*{useremail}">
+  							<div th:if="${#fields.hasErrors('useremail')}" th:errors="*{useremail}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="usernumber" class="form-label">外部取引先人材電話番号</label>
+  							<input type="text" class="form-control" id="usernumber" placeholder="外部取引先人材電話番号" name="usernumber" th:value="*{usernumber}">
+  							<div th:if="${#fields.hasErrors('usernumber')}" th:errors="*{usernumber}" class="text-danger"></div><br>
+						</div>
+						
+						<input th:if="${user_id}" type="hidden" name="user_id" th:value="${user_id}">
+						
+						<div th:if="${partnerUserForm.newUser}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="登録">
+							</div>
+						</div>
+						
+						<div th:if="${!partnerUserForm.newUser}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="更新" onclick="return confirmDelete('更新しますか？');">
+							</div>
+						</div>
+						
+					</form>
+					
+					<div th:if="${!partnerUserForm.newUser}" class="delete">
+						<form  action="#" th:action="@{/partnerUser/delete}" method="POST">
+							<input type="hidden" name="user_id" th:value="${user_id}">
+							<input type="submit" class="btn btn-danger w-50" value="削除" onclick="return confirmDelete('削除しますか？');">
+						</form>
+					</div>
+    					
+  				</div>
+			</div>
+		</div>
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,91 @@
+@charset "UTF-8";
+
+body {
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column; /* コンテンツエリアと上部バーを縦に配置 */
+}
+
+/* 上部バーのスタイル */
+.topbar {
+	background-image: url('../picture/forest.jpeg'); /* 画像のURLを指定 */
+	background-size: cover; /* 画像をバーに合わせて調整 */
+	color: #fff;
+	padding: 15px;
+	text-align: left;
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	z-index: 3;
+	font-size: 18px;
+	font-weight: bold;
+}
+
+
+/* サイドバーのスタイル */
+.sidebar {
+	width: 100px; /* 閉じているときは2倍の幅 */
+	background-color: #203344; /* サイドバーの背景色 */
+	color: #fff; /* テキストの色 */
+	position: fixed;
+	top: 50px; /* 上部バーの高さ分下げる */
+	bottom: 0;
+	overflow-y: auto;
+	transition: 0.3s;
+	z-index: 2;
+}
+
+.sidebar.open {
+	width: 250px; /* 開いているときは通常の幅 */
+}
+
+.toggle-button {
+	cursor: pointer;
+	display: block; /* 最初は3本線ボタン表示 */
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	font-size: 24px;
+	color: #fff;
+}
+
+.close-button {
+	cursor: pointer;
+	display: none; /* 最初は×ボタン非表示 */
+	position: absolute;
+	top: 10px;
+	left: 10px;
+	font-size: 24px;
+	color: #fff;
+}
+
+/* サイドメニューのスタイル */
+.menu {
+	list-style: none;
+	padding: 0;
+	display: none; /* 閉じているときは非表示 */
+	margin-top: 20px;
+}
+
+.menu li {
+	padding: 10px 0;
+}
+
+.menu a {
+	text-decoration: none;
+	color: #fff; /* メニュー項目のテキストの色 */
+	display: block;
+	transition: 0.3s;
+}
+
+.menu a:hover {
+	background-color: #555; /* ホバー時の背景色 */
+}
+
+/* サイドバーの中身のコンテンツを左寄せに配置 */
+.content-container {
+	padding: 20px;
+}

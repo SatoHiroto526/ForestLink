@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>連絡手段一覧</title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/list.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="flex">
+			
+			<div class="left">
+				<h3><b>連絡手段一覧</b></h3>
+				<p th:text="${complete}" class="text-info"></p>
+				<p th:text="${contactmethodCount}"></p>
+			</div>
+			
+			<div class="right">
+				<a type="button" th:href="@{/masterData/contactmethod/insert}" class="btn btn-info">新規連絡手段作成</a>
+			</div>
+			
+		</div>
+		
+		<div class="contentControl">	
+			<table class="table table-striped">
+				<thead>
+    				<tr>
+      					<th scope="col">ID</th>
+      					<th scope="col">連絡手段</th>
+      					<th scope="col">更新</th>
+    				</tr>
+    			
+    				<tr th:each="contactmethod:${contactmethodList}">
+						<td th:text="${contactmethod.contactmethod_id}"></td>
+						<td th:text="${contactmethod.contactmethod}"></td>
+						<td><a type="button" th:href="@{/masterData/contactmethod/update/{contactmethod_id}(contactmethod_id=${contactmethod.contactmethod_id})}" class="btn btn-outline-success">更新</a></td>
+					</tr>
+  				</thead>
+			</table>
+		</div>
+		
+    </div>
+
+</body>
+
+</html>

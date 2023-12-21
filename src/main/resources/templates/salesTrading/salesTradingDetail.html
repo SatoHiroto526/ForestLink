@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>外部取引先企業販売詳細</title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/detail.css}" rel="stylesheet">
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="left">
+			<h3><b>外部取引先企業販売詳細</b></h3>
+		</div>
+		
+		<div class="detail" th:object="${purchaseTrading}">
+			<table class="table">
+				<thead>
+    				<tr>
+      					<th scope="col">項目</th>
+      					<th scope="col">値</th>
+    				</tr>
+  				</thead>
+  				
+				<tr>
+					<td>ID</td>
+					<td th:text="*{trading_id}"></td>
+				</tr>
+				<tr>
+					<td>製品ID</td>
+					<td>
+						<a th:href="@{/product/detail/{product_id}(product_id=*{product_id})}" th:text="*{product_id}"></a>
+					</td>
+				</tr>
+				<tr>
+					<td>発注(受注)日</td>
+					<td th:text="*{orderday}"></td>
+				</tr>
+				<tr>
+					<td>仕入(納品)日</td>
+					<td th:text="*{purchaseday}"></td>
+				</tr>
+				<tr>
+					<td>購買外部取引先企業</td>
+					<td>
+						<a th:href="@{/partnerEnterprise/detail/{enterprise_id}(enterprise_id=*{purchaseenterprise_id})}" th:text="*{enterprise.enterprisename}"></a>
+					</td>
+				</tr>
+				<tr>
+					<td>販売参加企業</td>
+					<td>
+						<a th:href="@{/entryEnterprise/detail/{enterprise_id}(enterprise_id=*{salesenterprise_id})}" th:text="${salesTrading.enterprise.enterprisename}"></a>
+					</td>
+				</tr> 
+				<tr>
+					<td>購買担当外部取引先人材</td>
+					<td>
+						<a th:href="@{/partnerUser/detail/{user_id}(user_id=*{purchaseuser_id})}" th:text="*{user.username}"></a>
+					</td>
+				</tr>
+				<tr>
+					<td>販売担当ユーザー</td>
+					<td>
+						<a th:href="@{/user/detail/{user_id}(user_id=*{salesuser_id})}" th:text="${salesTrading.user.username}"></a>
+					</td>
+				</tr>
+				<tr>
+					<td>インバウンドorアウトバウンド</td>
+					<td th:text="*{salesworktype}"></td>
+				</tr>
+				<tr>
+					<td>取引数</td>
+					<td th:text="*{count}"></td>
+				</tr>
+				<tr>
+					<td>取引総額(円)</td>
+					<td th:text="*{price}"></td>
+				</tr>
+				
+			</table>
+    	</div>
+
+    </div>
+
+</body>
+
+</html>

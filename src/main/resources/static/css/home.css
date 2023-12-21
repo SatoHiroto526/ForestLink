@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+canvas{
+	width: 50%;
+	height: 100%;
+	display: block;
+}
+
+.chartLeft{
+	margin : 20px ;
+	width : 50%;
+}
+
+.chartRight{
+	margin : 20px ;
+	width : 50%;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/list.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="flex">
+			
+			<div class="left">
+				<h3><b th:text="${title}"></b></h3>
+				<p th:text="${stocktreasurerCount}"></p>
+			</div>
+			
+			<div class="right">
+				<a type="button" th:href="@{/stock/stocktreasurer/insert/{stock_id}(stock_id=${stock_id})}" class="btn btn-info">新規在庫出納作成</a>
+			</div>
+			
+		</div>
+		
+		<div class="contentControl">
+						
+				
+				<table class="table table-striped">
+					<thead>
+    					<tr>
+      						<th scope="col">ID</th>
+      						<th scope="col">入出庫担当者</th>
+      						<th scope="col">入庫or出庫</th>
+      						<th scope="col">入出庫数</th>
+      						<th scope="col">入出庫日</th>
+    					</tr>
+    			
+    					<tr th:each="stocktreasurer:${stocktreasurerList}">
+							<td th:text="${stocktreasurer.stocktreasurer_id}"></td>
+							<td><a th:href="@{/user/detail/{user_id}(user_id=*{stocktreasurer.repuser_id})}" th:text="*{stocktreasurer.user.username}"></a></td>
+							<td th:text="${stocktreasurer.treasure}"></td>
+							<td th:text="${stocktreasurer.treasurercount}"></td>
+							<td th:text="${stocktreasurer.treasureday}"></td>
+						</tr>
+  					</thead>
+				</table>
+			
+		</div>
+		
+    </div>
+
+</body>
+
+</html>

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>活動記録</title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/detail.css}" rel="stylesheet">
+    <link th:href="@{/css/map.css}" rel="stylesheet">
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="left">
+			<h3><b>活動記録</b></h3>
+		</div>
+				
+			<div class="detail" th:object="${workrecord}">
+			<table class="table">
+				<thead>
+    				<tr>
+      					<th scope="col">項目</th>
+      					<th scope="col">値</th>
+    				</tr>
+  				</thead>
+  				
+				<tr>
+					<td>活動記録ID</td>
+					<td th:text="*{workrecord_id}"></td>
+				</tr>
+				<tr>
+					<td>活動種別</td>
+					<td th:text="*{worktype.worktype}"></td>
+				</tr>
+				<tr>
+					<td>インバウンドorアウトバウンド</td>
+					<td th:text="*{salesworktype}"></td>
+				</tr>
+				<tr>
+					<td>参加企業</td>
+					<td><a th:href="@{/entryEnterprise/detail/{enterprise_id}(enterprise_id=*{enterprise_id})}" th:text="*{entryEnterprise.enterprisename}"></a></td>
+				</tr>
+				<tr>
+					<td>外部取引先企業</td>
+					<td><a th:href="@{/partnerEnterprise/detail/{partnerenterprise_id}(partnerenterprise_id=*{partnerenterprise_id})}" th:text="*{partnerEnterprise.enterprisename}"></a></td>
+				</tr>
+				<tr>
+					<td>ユーザー</td>
+					<td><a th:href="@{/user/detail/{user_id}(user_id=*{user_id})}" th:text="*{user.username}"></a></td>
+				</tr>
+				<tr>
+					<td>外部取引先人材</td>
+					<td><a th:href="@{/partnerUser/detail/{partneruser_id}(partneruser_id=*{partneruser_id})}" th:text="*{partnerUser.username}"></a></td>
+				</tr>
+				<tr>
+					<td>連絡手段</td>
+					<td th:text="*{contactmethod.contactmethod}"></td>
+				</tr>
+				<tr>
+					<td>活動詳細</td>
+					<td th:text="*{workrecorddetail}"></td>
+				</tr>
+				<tr>
+					<td>活動日</td>
+					<td th:text="*{workrecordday}"></td>
+				</tr>
+				
+			</table>
+
+		</div>
+		
+ </div>
+
+</body>
+
+</html>

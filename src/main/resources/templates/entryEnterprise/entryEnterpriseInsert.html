@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/insert.css}" rel="stylesheet">
+	<script th:src="@{/js/confirmPop.js}"></script>
+     
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="contentControl">
+			<div class="card">
+  				<div class="card-body">
+    					
+    				<h4 class="text-info" th:text="${title}"></h4>
+    				
+    				<form action="#" th:action="${enterpriseForm.newEnterprise}?@{/entryEnterprise/insert}:@{/entryEnterprise/update}" method="POST" th:object="${enterpriseForm}">
+						
+						<div class="mb-3">
+							<label for="enterprisename" class="form-label">企業名<span class="text-danger">*</span></label>
+  							<input type="text" class="form-control" id="enterprisename" placeholder="企業名" name="enterprisename" th:value="*{enterprisename}">
+  							<div th:if="${#fields.hasErrors('enterprisename')}" th:errors="*{enterprisename}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="postalcode" class="form-label">郵便番号<span class="text-danger">*</span></label>
+  							<input type="text" class="form-control" id="postalcode" placeholder="郵便番号" name="postalcode" th:value="*{postalcode}">
+  							<div th:if="${#fields.hasErrors('postalcode')}" th:errors="*{postalcode}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="address" class="form-label">所在地<span class="text-danger">*</span></label>
+  							<input type="text" class="form-control" id="address" placeholder="所在地" name="address" th:value="*{address}">
+  							<div th:if="${#fields.hasErrors('address')}" th:errors="*{address}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="foundnationdate" class="form-label">設立年月日</label>
+  							<input type="date" class="form-control" id="foundnationdate" name="foundnationdate" th:value="*{foundnationdate}">
+  							<div th:if="${#fields.hasErrors('foundnationdate')}" th:errors="*{foundnationdate}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="chiefname" class="form-label">代表者氏名</label>
+  							<input type="text" class="form-control" id="chiefname" placeholder="代表者氏名" name="chiefname" th:value="*{chiefname}">
+  							<div th:if="${#fields.hasErrors('chiefname')}" th:errors="*{chiefname}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="capital" class="form-label">資本金</label>
+  							<input type="text" class="form-control" id="capital" placeholder="資本金" name="capital" th:value="*{capital}">
+  							<div th:if="${#fields.hasErrors('capital')}" th:errors="*{capital}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="corporatenumber" class="form-label">法人番号</label>
+  							<input type="text" class="form-control" id="corporatenumber" placeholder="法人番号" name="corporatenumber" th:value="*{corporatenumber}">  
+  							<div th:if="${#fields.hasErrors('corporatenumber')}" th:errors="*{corporatenumber}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="employees" class="form-label">従業員数</label>
+  							<input type="number" class="form-control" id="employees" placeholder="従業員数" name="employees" th:value="*{employees}">
+  							<div th:if="${#fields.hasErrors('employees')}" th:errors="*{employees}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="businesstype_id" class="form-label">事業区分<span class="text-danger">*</span></label>
+							<select class="form-control" id="businesstype_id" name="businesstype_id">
+  								<option th:each="businesstype:${businesstypeList}" 
+									th:value="${businesstype.businesstype_id}" 
+									th:text="${businesstype.businesstype}" 
+									th:selected="${enterpriseForm.businesstype_id == businesstype.businesstype_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('businesstype_id')}" th:errors="*{businesstype_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="businessdetail" class="form-label">事業詳細</label>
+  							<textarea class="form-control" id="businessdetail" placeholder="事業詳細" name="businessdetail" th:field="*{businessdetail}"></textarea>
+  							<div th:if="${#fields.hasErrors('businessdetail')}" th:errors="*{businessdetail}" class="text-danger"></div>
+						</div>
+						
+						<div class="mb-3">
+							<label for="enterpriseemail" class="form-label">企業メールアドレス</label>
+  							<input type="email" class="form-control" id="enterpriseemail" placeholder="企業メールアドレス" name="enterpriseemail" th:value="*{enterpriseemail}">
+  							<div th:if="${#fields.hasErrors('enterpriseemail')}" th:errors="*{enterpriseemail}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="enterprisenumber" class="form-label">企業電話番号</label>
+  							<input type="text" class="form-control" id="enterprisenumber" placeholder="企業電話番号" name="enterprisenumber" th:value="*{enterprisenumber}">
+  							<div th:if="${#fields.hasErrors('enterprisenumber')}" th:errors="*{enterprisenumber}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="homepage" class="form-label">企業ホームページURL</label>
+  							<input type="text" class="form-control" id="homepage" placeholder="企業ホームページURL" name="homepage" th:value="*{homepage}">
+  							<div th:if="${#fields.hasErrors('homepage')}" th:errors="*{homepage}" class="text-danger"></div><br>
+						</div>
+						
+						<input th:if="${enterprise_id}" type="hidden" name="enterprise_id" th:value="${enterprise_id}">
+						
+						<div th:if="${enterpriseForm.newEnterprise}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="登録">
+							</div>
+						</div>
+						
+						<div th:if="${!enterpriseForm.newEnterprise}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="更新" onclick="return confirmDelete('更新しますか？');">
+							</div>
+						</div>
+						
+					</form>
+					
+					<div th:if="${!enterpriseForm.newEnterprise}" class="delete">
+						<form  action="#" th:action="@{/entryEnterprise/delete}" method="POST">
+							<input type="hidden" name="enterprise_id" th:value="${enterprise_id}">
+							<input type="submit" class="btn btn-danger w-50" value="削除" onclick="return confirmDelete('削除しますか？');">
+						</form>
+					</div>
+    					
+  				</div>
+			</div>
+		</div>
+    </div>
+
+</body>
+
+</html>

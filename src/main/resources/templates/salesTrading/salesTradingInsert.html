@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/insert.css}" rel="stylesheet">
+	<script th:src="@{/js/confirmPop.js}"></script>
+     
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="contentControl">
+			<div class="card">
+  				<div class="card-body">
+    					
+    				<h4 class="text-info" th:text="${title}"></h4>
+    				
+    				<form action="#" th:action="${tradingForm.newTrading}?@{/salesTrading/insert}:@{/salesTrading/update}" method="POST" th:object="${tradingForm}">
+						
+						<div class="mb-3">
+							<label for="product_id" class="form-label">取引製品<span class="text-danger">*</span></label>
+							<select class="form-control" id="product_id" name="product_id">
+  								<option th:each="product:${productList}" 
+										th:value="${product.product_id}" 
+										th:text="${product.product_id}" 
+										th:selected="${tradingForm.product_id == product.product_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('product_id')}" th:errors="*{product_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="orderday" class="form-label">発注(受注)日</label>
+  							<input type="date" class="form-control" id="orderday" name="orderday" th:value="*{orderday}">
+  							<div th:if="${#fields.hasErrors('orderday')}" th:errors="*{orderday}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="purchaseday" class="form-label">仕入(納品)日</label>
+  							<input type="date" class="form-control" id="purchaseday" name="purchaseday" th:value="*{purchaseday}">
+  							<div th:if="${#fields.hasErrors('purchaseday')}" th:errors="*{purchaseday}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+								<label for="purchaseenterprise_id" class="form-label">購買外部取引先企業<span class="text-danger">*</span></label>
+								<select class="form-control" id="purchaseenterprise_id" name="purchaseenterprise_id">
+  									<option th:each="enterprise:${partnerenterpriseList}" 
+										th:value="${enterprise.enterprise_id}" 
+										th:text="${enterprise.enterprisename}" 
+										th:selected="${tradingForm.purchaseenterprise_id == enterprise.enterprise_id}">
+									</option>
+								</select>
+							</div>
+							
+							<div class="mb-3">
+								<label for="salesenterprise_id" class="form-label">販売参加企業<span class="text-danger">*</span></label>
+								<select class="form-control" id="salesenterprise_id" name="salesenterprise_id">
+  									<option th:each="enterprise:${enterpriseList}" 
+										th:value="${enterprise.enterprise_id}" 
+										th:text="${enterprise.enterprisename}" 
+										th:selected="${tradingForm.salesenterprise_id == enterprise.enterprise_id}">
+									</option>
+								</select>
+							</div>
+							
+							<div class="mb-3">
+								<label for="purchaseuser_id" class="form-label">購買担当外部取引先人材<span class="text-danger">*</span></label>
+								<select class="form-control" id="purchaseuser_id" name="purchaseuser_id">
+  									<option th:each="user:${partneruserList}" 
+											th:value="${user.user_id}" 
+											th:text="${user.username}" 
+											th:selected="${tradingForm.purchaseuser_id == user.user_id}">
+									</option>
+								</select>
+								<div th:if="${#fields.hasErrors('purchaseuser_id')}" th:errors="*{purchaseuser_id}" class="text-danger"></div><br>
+							</div>
+							
+							<div class="mb-3">
+								<label for="salesuser_id" class="form-label">販売担当ユーザー<span class="text-danger">*</span></label>
+								<select class="form-control" id="salesuser_id" name="salesuser_id">
+  									<option th:each="user:${userList}" 
+											th:value="${user.user_id}" 
+											th:text="${user.username}" 
+											th:selected="${tradingForm.salesuser_id == user.user_id}">
+									</option>
+								</select>
+								<div th:if="${#fields.hasErrors('salesuser_id')}" th:errors="*{salesuser_id}" class="text-danger"></div><br>
+							</div>
+							
+							<div class="mb-3">
+								<label for="salesworktype" class="form-label">インバウンドorアウトバウンド</label>
+								<select class="form-control" id="salesworktype" name="salesworktype">
+  									<option th:each="salesworktype:${salesworktypeList}" 
+										th:value="${salesworktype.salesworktype}" 
+										th:text="${salesworktype.salesworktype}" 
+										th:selected="${tradingForm.salesworktype == salesworktype.salesworktype}">
+									</option>
+								</select>
+								<div th:if="${#fields.hasErrors('salesworktype')}" th:errors="*{salesworktype}" class="text-danger"></div><br>
+							</div>
+							
+							<div class="mb-3">
+								<label for="count" class="form-label">取引数</label>
+  								<input type="number" class="form-control" id="count" placeholder="取引数" name="count" th:value="*{count}">
+  								<div th:if="${#fields.hasErrors('count')}" th:errors="*{count}" class="text-danger"></div><br>
+							</div>
+							
+							<div class="mb-3">
+								<label for="price" class="form-label">取引総額(円)</label>
+  								<input type="number" class="form-control" id="price" placeholder="取引総額(円)" name="price" th:value="*{price}">
+  								<div th:if="${#fields.hasErrors('price')}" th:errors="*{price}" class="text-danger"></div><br>
+							</div>
+
+						
+						<input th:if="${trading_id}" type="hidden" name="trading_id" th:value="${trading_id}">
+						
+						<div th:if="${tradingForm.newTrading}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="登録">
+							</div>
+						</div>
+						
+						<div th:if="${!tradingForm.newTrading}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="更新" onclick="return confirmDelete('更新しますか？');">
+							</div>
+						</div>
+						
+					</form>
+					
+					<div th:if="${!tradingForm.newTrading}" class="delete">
+						<form  action="#" th:action="@{/purchaseTrading/delete}" method="POST">
+							<input type="hidden" name="trading_id" th:value="${trading_id}">
+							<input type="submit" class="btn btn-danger w-50" value="削除" onclick="return confirmDelete('削除しますか？');">
+						</form>
+					</div>
+    					
+  				</div>
+			</div>
+		</div>
+    </div>
+
+</body>
+
+</html>

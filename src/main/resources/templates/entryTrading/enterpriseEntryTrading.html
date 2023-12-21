@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/list.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="flex">
+			
+			<div class="left">
+				<h3><b th:text="${title}"></b></h3>
+				<p th:text="${tradingCount}"></p>
+			</div>
+			
+		</div>
+		
+		<div class="contentControl">
+						
+				
+				<table class="table table-striped">
+					<thead>
+    					<tr>
+      						<th scope="col">ID</th>
+      						<th scope="col">製品ID</th>
+      						<th scope="col">発注(受注)日</th>
+      						<th scope="col">仕入(納品)日</th>
+      						<th scope="col">詳細</th>
+    					</tr>
+    			
+    					<tr th:each="trading:${tradingList}">
+							<td th:text="${trading.trading_id}"></td>
+							<td><a th:href="@{/product/detail/{product_id}(product_id=${trading.product_id})}" th:text="${trading.product_id}"></a></td>
+							<td th:text="${trading.orderday}"></td>
+							<td th:text="${trading.purchaseday}"></td>
+							<td><a type="button" th:href="@{/entryTrading/detail/{trading_id}(trading_id=${trading.trading_id})}" class="btn btn-outline-primary">詳細</a></td>
+						</tr>
+  					</thead>
+				</table>
+			
+		</div>
+		
+    </div>
+
+</body>
+
+</html>

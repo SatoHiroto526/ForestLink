@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/insert.css}" rel="stylesheet">
+	<script th:src="@{/js/confirmPop.js}"></script>
+     
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="contentControl">
+			<div class="card">
+  				<div class="card-body">
+    					
+    				<h4 class="text-info" th:text="${title}"></h4>
+    				
+    				<form action="#" th:action="@{/stock/stocktreasurer/insert}" method="POST" th:object="${stocktreasurerForm}">
+						
+						<div class="mb-3">
+							<label for="repuser_id" class="form-label">入出庫担当者ユーザー<span class="text-danger">*</span></label>
+							<select class="form-control" id="repuser_id" name="repuser_id">
+  								<option th:each="user:${userList}" 
+										th:value="${user.user_id}" 
+										th:text="${user.username}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('repuser_id')}" th:errors="*{repuser_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="treasure" class="form-label">入庫or出庫<span class="text-danger">*</span></label>
+							<select class="form-control" id="treasure" name="treasure">
+  								<option th:each="treasure:${treasureList}" 
+									th:value="${treasure.treasure}" 
+									th:text="${treasure.treasure}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('treasure')}" th:errors="*{treasure}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="treasurercount" class="form-label">入出庫数<span class="text-danger">*</span></label>
+  							<input type="number" class="form-control" id="treasurercount" placeholder="入出庫数" name="treasurercount">
+  							<div th:if="${#fields.hasErrors('treasurercount')}" th:errors="*{treasurercount}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="treasureday" class="form-label">入出庫日<span class="text-danger">*</span></label>
+  							<input type="date" class="form-control" id="treasureday" name="treasureday">
+  							<div th:if="${#fields.hasErrors('treasureday')}" th:errors="*{treasureday}" class="text-danger"></div><br>
+						</div>
+						
+						<input th:if="${stock_id}" type="hidden" name="stock_id" th:value="${stock_id}">
+						
+
+						<div class="mb-3">
+  							<input type="submit" class="btn btn-primary w-50" value="登録">
+						</div>
+
+						
+					</form>
+    					
+  				</div>
+			</div>
+		</div>
+    </div>
+
+</body>
+
+</html>

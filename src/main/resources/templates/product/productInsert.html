@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/insert.css}" rel="stylesheet">
+	<script th:src="@{/js/confirmPop.js}"></script>
+     
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="contentControl">
+			<div class="card">
+  				<div class="card-body">
+    					
+    				<h4 class="text-info" th:text="${title}"></h4>
+    				
+    				<form action="#" th:action="${productForm.newProduct}?@{/product/insert}:@{/product/update}" method="POST" th:object="${productForm}">
+						
+						<div class="mb-3">
+							<label for="producttype_id" class="form-label">製品種別<span class="text-danger">*</span></label>
+							<select class="form-control" id="producttype_id" name="producttype_id">
+  								<option th:each="producttype:${producttypeList}" 
+										th:value="${producttype.producttype_id}" 
+										th:text="${producttype.producttype}" 
+										th:selected="${productForm.producttype_id == producttype.producttype_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('producttype_id')}" th:errors="*{producttype_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="enterprise_id" class="form-label">取扱参加企業<span class="text-danger">*</span></label>
+							<select class="form-control" id="enterprise_id" name="enterprise_id">
+  								<option th:each="entryenterprise:${entryenterpriseList}" 
+										th:value="${entryenterprise.enterprise_id}" 
+										th:text="${entryenterprise.enterprisename}" 
+										th:selected="${productForm.enterprise_id == entryenterprise.enterprise_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('enterprise_id')}" th:errors="*{enterprise_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="breed_id" class="form-label">品種<span class="text-danger">*</span></label>
+							<select class="form-control" id="breed_id" name="breed_id">
+  								<option th:each="breed:${breedList}" 
+										th:value="${breed.breed_id}" 
+										th:text="${breed.breed}" 
+										th:selected="${productForm.breed_id == breed.breed_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('breed_id')}" th:errors="*{breed_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="sawingmethod" class="form-label">無垢材or集成材</label>
+							<select class="form-control" id="sawingmethod" name="sawingmethod">
+								<option value="">未登録</option>
+  								<option th:each="sawingmethod:${sawingmethodList}" 
+										th:value="${sawingmethod.sawingmethod}" 
+										th:text="${sawingmethod.sawingmethod}" 
+										th:selected="${productForm.sawingmethod == sawingmethod.sawingmethod}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('sawingmethod')}" th:errors="*{sawingmethod}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="materialtype" class="form-label">丸材or角材</label>
+							<select class="form-control" id="materialtype" name="materialtype">
+								<option value="">未登録</option>
+  								<option th:each="materialtype:${materialtypeList}" 
+										th:value="${materialtype.materialtype}" 
+										th:text="${materialtype.materialtype}" 
+										th:selected="${productForm.materialtype == materialtype.materialtype}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('materialtype')}" th:errors="*{materialtype}" class="text-danger"></div><br>
+						</div>
+
+						
+						<div class="mb-3">
+							<label for="length" class="form-label">材長(cm)</label>
+  							<input type="number" class="form-control" id="length" placeholder="材長(cm)" name="length" th:value="*{length}">
+  							<div th:if="${#fields.hasErrors('length')}" th:errors="*{length}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="diameter_bottom" class="form-label">径級(下)(cm)</label>
+  							<input type="number" class="form-control" id="diameter_bottom" placeholder="径級(下)(cm)" name="diameter_bottom" th:value="*{diameter_bottom}">
+  							<div th:if="${#fields.hasErrors('diameter_bottom')}" th:errors="*{diameter_bottom}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="diameter_top" class="form-label">径級(上)(cm)</label>
+  							<input type="number" class="form-control" id="diameter_top" placeholder="径級(上)(cm)" name="diameter_top" th:value="*{diameter_top}">
+  							<div th:if="${#fields.hasErrors('diameter_top')}" th:errors="*{diameter_top}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="length_short" class="form-label">短辺の長さ(cm)</label>
+  							<input type="number" class="form-control" id="length_short" placeholder="短辺の長さ(cm)" name="length_short" th:value="*{length_short}">
+  							<div th:if="${#fields.hasErrors('length_short')}" th:errors="*{length_short}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="length_long" class="form-label">長辺の長さ(cm)</label>
+  							<input type="number" class="form-control" id="length_long" placeholder="長辺の長さ(cm)" name="length_long" th:value="*{length_long}">
+  							<div th:if="${#fields.hasErrors('length_long')}" th:errors="*{length_long}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="jas" class="form-label">JAS規格適合</label>
+							<select class="form-control" id="jas" name="jas">
+								<option value="">未登録</option>
+  								<option th:each="jas:${jasList}" 
+										th:value="${jas.jas}" 
+										th:text="${jas.jas}" 
+										th:selected="${productForm.jas == jas.jas}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('jas')}" th:errors="*{jas}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="productdetail" class="form-label">製品詳細</label>
+  							<textarea class="form-control" id="productdetail" placeholder="製品詳細" name="productdetail" th:field="*{productdetail}"></textarea>
+  							<div th:if="${#fields.hasErrors('productdetail')}" th:errors="*{productdetail}" class="text-danger"></div>
+						</div>
+						
+						<input th:if="${product_id}" type="hidden" name="product_id" th:value="${product_id}">
+						
+						<div th:if="${productForm.newProduct}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="登録">
+							</div>
+						</div>
+						
+						<div th:if="${!productForm.newProduct}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="更新" onclick="return confirmDelete('更新しますか？');">
+							</div>
+						</div>
+						
+					</form>
+					
+					<div th:if="${!productForm.newProduct}" class="delete">
+						<form  action="#" th:action="@{/product/delete}" method="POST">
+							<input type="hidden" name="product_id" th:value="${product_id}">
+							<input type="submit" class="btn btn-danger w-50" value="削除" onclick="return confirmDelete('削除しますか？');">
+						</form>
+					</div>
+    					
+  				</div>
+			</div>
+		</div>
+    </div>
+
+</body>
+
+</html>

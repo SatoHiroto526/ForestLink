@@ -1,0 +1,28 @@
+@charset "UTF-8";
+
+.card{
+	margin-top:20px;
+	width:60%;
+	text-align :center;
+}
+
+.contentControl{
+	display: flex;
+	justify-content: center;
+}
+
+.form-label{
+	display: flex;
+	justify-content: left;
+}
+
+.delete{
+	margin-top:50px;
+}
+
+.text-danger{
+	text-align :left;
+}
+
+
+

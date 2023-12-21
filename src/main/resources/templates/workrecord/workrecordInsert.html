@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/insert.css}" rel="stylesheet">
+	<script th:src="@{/js/confirmPop.js}"></script>
+     
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="contentControl">
+			<div class="card">
+  				<div class="card-body">
+    					
+    				<h4 class="text-info" th:text="${title}"></h4>
+    				
+    				<form action="#" th:action="${workrecordForm.NewWorkrecord}?@{/workrecord/partnerEnterprise/insert}:@{/workrecord/partnerEnterprise/update}" method="POST" th:object="${workrecordForm}">
+						
+						<div class="mb-3">
+							<label for="worktype_id" class="form-label">活動種別<span class="text-danger">*</span></label>
+							<select class="form-control" id="worktype_id" name="worktype_id">
+  								<option th:each="worktype:${worktypeList}" 
+									th:value="${worktype.worktype_id}" 
+									th:text="${worktype.worktype}" 
+									th:selected="${workrecordForm.worktype_id == worktype.worktype_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('worktype_id')}" th:errors="*{worktype_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="salesworktype" class="form-label">インバウンドorアウトバウンド<span class="text-danger">*</span></label>
+							<select class="form-control" id="salesworktype" name="salesworktype">
+  								<option th:each="salesworktype:${salesworktypeList}" 
+									th:value="${salesworktype.salesworktype}" 
+									th:text="${salesworktype.salesworktype}" 
+									th:selected="${workrecordForm.salesworktype == salesworktype.salesworktype}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('salesworktype')}" th:errors="*{salesworktype}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="enterprise_id" class="form-label">参加企業<span class="text-danger">*</span></label>
+							<select class="form-control" id="enterprise_id" name="enterprise_id">
+  								<option th:each="enterprise:${entryenterpriseList}" 
+									th:value="${enterprise.enterprise_id}" 
+									th:text="${enterprise.enterprisename}" 
+									th:selected="${workrecordForm.enterprise_id == enterprise.enterprise_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('enterprise_id')}" th:errors="*{enterprise_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="user_id" class="form-label">ユーザー<span class="text-danger">*</span></label>
+							<select class="form-control" id="user_id" name="user_id">
+  								<option th:each="user:${userList}" 
+									th:value="${user.user_id}" 
+									th:text="${user.username}" 
+									th:selected="${workrecordForm.user_id == user.user_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('user_id')}" th:errors="*{user_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="partneruser_id" class="form-label">外部取引先人材<span class="text-danger">*</span></label>
+							<select class="form-control" id="partneruser_id" name="partneruser_id">
+  								<option th:each="partneruser:${partneruserList}" 
+									th:value="${partneruser.user_id}" 
+									th:text="${partneruser.username}" 
+									th:selected="${workrecordForm.partneruser_id == partneruser.user_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('partneruser_id')}" th:errors="*{partneruser_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="contactmethod_id" class="form-label">連絡手段<span class="text-danger">*</span></label>
+							<select class="form-control" id="contactmethod_id" name="contactmethod_id">
+  								<option th:each="contactmethod:${contactmethodList}" 
+									th:value="${contactmethod.contactmethod_id}" 
+									th:text="${contactmethod.contactmethod}" 
+									th:selected="${workrecordForm.contactmethod_id == contactmethod.contactmethod_id}">
+								</option>
+							</select>
+							<div th:if="${#fields.hasErrors('contactmethod_id')}" th:errors="*{contactmethod_id}" class="text-danger"></div><br>
+						</div>
+						
+						<div class="mb-3">
+							<label for="workrecorddetail" class="form-label">活動詳細</label>
+  							<textarea class="form-control" id="workrecorddetail" placeholder="活動詳細" name="workrecorddetail" th:field="*{workrecorddetail}"></textarea>
+  							<div th:if="${#fields.hasErrors('workrecorddetail')}" th:errors="*{workrecorddetail}" class="text-danger"></div>
+						</div>
+						
+						<div class="mb-3">
+							<label for="workrecordday" class="form-label">活動日<span class="text-danger">*</span></label>
+  							<input type="date" class="form-control" id="workrecordday" name="workrecordday" th:value="*{workrecordday}">
+  							<div th:if="${#fields.hasErrors('workrecordday')}" th:errors="*{workrecordday}" class="text-danger"></div><br>
+						</div>
+						
+						<input type="hidden" name="partnerenterprise_id" th:value="${partnerenterprise_id}">
+						<input th:if="${workrecord_id}" type="hidden" name="workrecord_id" th:value="${workrecord_id}">
+						
+						<div th:if="${workrecordForm.NewWorkrecord}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="登録">
+							</div>
+						</div>
+						
+						<div th:if="${!workrecordForm.NewWorkrecord}">
+							<div class="mb-3">
+  								<input type="submit" class="btn btn-primary w-50" value="更新" onclick="return confirmDelete('更新しますか？');">
+							</div>
+						</div>
+						
+					</form>
+					
+					<div th:if="${!workrecordForm.NewWorkrecord}" class="delete">
+						<form  action="#" th:action="@{/workrecord/partnerEnterprise/delete}" method="POST">
+							<input type="hidden" name="workrecord_id" th:value="${workrecord_id}">
+							<input type="hidden" name="partnerenterprise_id" th:value="${partnerenterprise_id}">
+							<input type="submit" class="btn btn-danger w-50" value="削除" onclick="return confirmDelete('削除しますか？');">
+						</form>
+					</div>
+    					
+  				</div>
+			</div>
+		</div>
+    </div>
+
+</body>
+
+</html>

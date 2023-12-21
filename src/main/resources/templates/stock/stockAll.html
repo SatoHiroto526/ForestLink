@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${title}"></title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/list.css}" rel="stylesheet">
+
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="flex">
+			
+			<div class="left">
+				<h3><b th:text="${title}"></b></h3>
+				<p th:text="${complete}" class="text-info"></p>
+				<p th:text="${stockCount}"></p>
+			</div>
+			
+			<div th:if="${!archiveStock}">
+				<div class="right">
+					<a type="button" th:href="@{/stock/insert}" class="btn btn-info">新規在庫作成</a>
+				</div>
+			</div>
+			
+		</div>
+		
+		<div class="contentControl">
+						
+			<div class="contentLeft">
+				
+				<table class="table table-striped">
+					<thead>
+    					<tr>
+      						<th scope="col">ID</th>
+      						<th scope="col">所有参加企業</th>
+      						<th scope="col">在庫種別</th>
+      						<th scope="col">在庫数</th>
+      						<th scope="col">在庫出納</th>
+      						<th scope="col">詳細</th>
+      						<th scope="col">更新</th>
+    					</tr>
+    			
+    					<tr th:each="stock:${stockList}">
+							<td th:text="${stock.stock_id}"></td>
+							<td><a th:href="@{/entryEnterprise/detail/{enterprise_id}(enterprise_id=*{stock.enterprise_id})}" th:text="*{stock.enterprise.enterprisename}"></a></td>
+							<td th:text="${stock.stocktype}"></td>
+							<td th:text="${stock.stockcount}"></td>
+							<td><a type="button" th:href="@{/stock/stocktreasurer/{stock_id}(stock_id=${stock.stock_id})}" class="btn btn-outline-secondary">在庫出納</a></td>
+							<td><a type="button" th:href="@{/stock/detail/{stock_id}(stock_id=${stock.stock_id})}" class="btn btn-outline-primary">詳細</a></td>
+							<td><a type="button" th:href="@{/stock/update/{stock_id}(stock_id=${stock.stock_id})}" class="btn btn-outline-success">更新</a></td>
+						</tr>
+  					</thead>
+				</table>
+			</div>
+			
+			
+			<div class="contentRight">
+				<div class="card" style="width: 18rem;">
+  					<div class="card-header">
+    					<b>絞り込み検索</b>
+  					</div>
+  					<div class="card-body">
+    					
+    					<form action="#" th:action="${archiveStock}?@{/filteredArchiveStock}:@{/filteredStock}" th:object="${stockFilter}">
+					
+							<div class="mb-3">
+								<label for="enterprise_id" class="form-label">所有参加企業</label>
+								<select class="form-control" id="enterprise_id" name="enterprise_id">
+  									<option value="0">すべて</option>
+  									<option th:each="enterprise:${enterpriseList}" 
+										th:value="${enterprise.enterprise_id}" 
+										th:text="${enterprise.enterprisename}" 
+										th:selected="${stockFilter.enterprise_id == enterprise.enterprise_id}">
+									</option>
+								</select>
+							</div>
+							
+							<div class="mb-3">
+								<label for="stocktype" class="form-label">在庫種別</label>
+								<select class="form-control" id="stocktype" name="stocktype">
+  									<option value="">すべて</option>
+  									<option th:each="stocktype:${stocktypeList}" 
+										th:value="${stocktype.stocktype}" 
+										th:text="${stocktype.stocktype}" 
+										th:selected="${stockFilter.stocktype == stocktype.stocktype}">
+									</option>
+								</select>
+							</div>
+							
+							<div class="mb-3">
+								<label for="stockstatus_id" class="form-label">在庫状態</label>
+								<select class="form-control" id="stockstatus_id" name="stockstatus_id">
+  									<option value="0">すべて</option>
+  									<option th:each="stockstatus:${stockstatusList}" 
+										th:value="${stockstatus.stockstatus_id}" 
+										th:text="${stockstatus.stockstatus}" 
+										th:selected="${stockFilter.stockstatus_id == stockstatus.stockstatus_id}">
+									</option>
+								</select>
+							</div>
+							
+							<div class="mb-3">
+								<label for="producttype_id" class="form-label">製品種別</label>
+								<select class="form-control" id="producttype_id" name="producttype_id">
+  									<option value="0">すべて</option>
+  									<option th:each="producttype:${producttypeList}" 
+										th:value="${producttype.producttype_id}" 
+										th:text="${producttype.producttype}" 
+										th:selected="${stockFilter.producttype_id == producttype.producttype_id}">
+									</option>
+								</select>
+							</div>
+							
+							<div class="mb-3">
+								<label for="breed_id" class="form-label">品種</label>
+								<select class="form-control" id="breed_id" name="breed_id">
+  									<option value="0">すべて</option>
+  									<option th:each="breed:${breedList}" 
+										th:value="${breed.breed_id}" 
+										th:text="${breed.breed}" 
+										th:selected="${stockFilter.breed_id == breed.breed_id}">
+									</option>
+								</select>
+							</div>
+							
+							<div class="text-center">
+								<input type="submit" class="btn btn-primary w-50" value="絞り込み検索">
+							</div>
+							
+						</form>
+    					
+  					</div>
+				</div>
+				
+			</div>
+			
+		</div>
+		
+    </div>
+
+</body>
+
+</html>

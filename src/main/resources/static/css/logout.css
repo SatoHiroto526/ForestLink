@@ -1,0 +1,16 @@
+@charset "UTF-8";
+button {
+	width: 20%;
+	padding: 5px;
+	margin: 10px 0;
+	background-color: #203344;
+	color: white;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+		
+.logout{
+	display: flex;
+  	justify-content: center;
+}

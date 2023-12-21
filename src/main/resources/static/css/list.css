@@ -1,0 +1,41 @@
+@charset "UTF-8";
+
+.flex{
+	display: flex;
+	justify-content: space-between;
+}
+
+.right{
+	margin-top : 20px ;
+}
+
+.left{
+	margin-top : 10px ;
+}
+
+.contentControl{
+	display: flex;
+	justify-content: space-between;
+}
+
+.contentLeft{
+	margin : 10px ;
+	width : 80%;
+}
+
+.contentRight{
+	margin : 10px;
+}
+
+.card{
+	width : 10%;
+}
+
+.card-header{
+	text-align : center;
+}
+
+
+
+
+

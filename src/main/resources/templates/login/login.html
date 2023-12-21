@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+
+<title>ログイン</title>
+   
+<link rel="icon" th:href="@{/icon/ForestLink.ico}">
+<link rel="stylesheet" th:href="@{/css/login.css}">
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<meta charset="UTF-8">
+   
+</head>
+<body>
+    <div class="left-half">
+        <div class="iconimage"></div>
+        <div class="login-form">
+            <form action="#" th:action="@{/login}" method="POST">
+                <h3>ログイン</h3>
+                <input type="email" placeholder="メールアドレス" id="emailInput" name="email">
+                <input type="password" placeholder="パスワード" id="passwordInput" name="password">
+                <div th:if="${param.error}"><p  class="text-danger">メールアドレスもしくはパスワードが違います</p></div>
+                <button type='submit'>ログイン</button>
+            </form>
+        </div>
+    </div>
+    <div class="right-half"></div>
+</body>
+</html>

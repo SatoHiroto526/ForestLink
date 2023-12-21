@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+<meta charset="UTF-8">
+<title>ホーム</title>
+
+<link rel="icon" th:href="@{/icon/ForestLink.ico}">
+<link th:href="@{/css/content.css}" rel="stylesheet">
+<link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+<link th:href="@{/css/list.css}" rel="stylesheet">
+<link th:href="@{/css/home.css}" rel="stylesheet">
+<script src="//cdn.jsdelivr.net/npm/chart.js@3.6.2/dist/chart.min.js"></script>
+
+</head>
+<body>
+	
+	<div th:replace="~{block/bar}"></div>
+	<div class="content">
+		
+		<div class="flex">
+			
+			<div class="left">
+				<h3><b th:text="${enterprisename}"></b></h3>
+			</div>
+			
+		</div>	
+		
+		<br>
+			
+		<label for="pl">直近1年の月別購買額と月別売上高の推移(当月分は当月発生見込みの購買額と売上高を含む)</label>
+		<div>
+    		<canvas id="pl"></canvas>
+  		</div>
+  		
+  		<div class="contentControl">
+			  
+			<div class="chartLeft">
+  				<label for="stocktype">在庫種別在庫割合</label>
+				<div>
+    				<canvas id="stocktype"></canvas>
+  				</div>
+  			</div>
+  		
+  			<div class="chartRight">
+  				<label for="breed">品種別在庫割合</label>
+				<div>
+    				<canvas id="breed"></canvas>
+  				</div>
+  			</div>
+  		
+		</div>
+		
+<script type="text/javascript" th:inline="javascript">
+    window.onload = (e) => {
+        drawPLChart();
+        drawStockTypeChart();
+        drawBreedChart();
+    };
+
+    function drawPLChart() {
+        const ctx = document.getElementById("pl").getContext("2d");
+        const barAndLineChart = new Chart(ctx, {
+            type: "bar",
+            data: {
+                labels: [[${PLlavel}]],
+                datasets: [
+                    {
+                        type: "line",
+                        label: "月別購買額推移",
+                        data: [[${PLPurchas}]],
+                        fill: false,
+                        borderColor: "rgba(255,99,132,1)",
+                        borderWidth: 2
+                    }, {
+                        label: "月別売上高推移",
+                        data: [[${PLSales}]],
+                        backgroundColor: ["rgba(112,182,255,1)"],
+                        borderColor: ["rgba(112,182,255,1)"],
+                        borderWidth: 1
+                    }
+                ]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+
+    function drawStockTypeChart() {
+        const ctx = document.getElementById("stocktype").getContext("2d");
+        const pieChart = new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: [[${stockTypeLavel}]],
+                datasets: [{
+                    label: "在庫種別在庫割合",
+                    data: [[${stockType}]],
+                    backgroundColor: [
+                        "rgba(112,182,255,1)",
+                        "rgba(0, 255, 0, 1)",
+                        "rgba(255, 255, 0, 1)",
+                        "rgba(255, 0, 0, 1)"
+                    ],
+                    borderColor: [
+                        "rgba(112,182,255,1)",
+                        "rgba(0, 255, 0, 1)",
+                        "rgba(255, 255, 0, 1)",
+                        "rgba(255, 0, 0, 1)"
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }
+    
+    function drawBreedChart() {
+        const ctx = document.getElementById("breed").getContext("2d");
+        const pieChart = new Chart(ctx, {
+            type: "pie",
+            data: {
+                labels: [[${breedLavel}]],
+                datasets: [{
+                    label: "品種別在庫割合",
+                    data: [[${breed}]],
+                    backgroundColor: [
+                        "rgba(112,182,255,1)",
+                        "rgba(0, 255, 0, 1)",
+                        "rgba(255, 255, 0, 1)",
+                        "rgba(255, 0, 0, 1)",
+                        "rgba(0, 0, 255, 1)",
+                        "rgba(0, 128, 128, 1)",
+                        "rgba(255, 0, 255, 1)",
+                        "rgba(192, 192, 192, 1)",
+                        "rgba(0, 128, 0, 1)",
+                        "rgba(0, 0, 128, 1)"
+                    ],
+                    borderColor: [
+                        "rgba(112,182,255,1)",
+                        "rgba(0, 255, 0, 1)",
+                        "rgba(255, 255, 0, 1)",
+                        "rgba(255, 0, 0, 1)",
+                        "rgba(0, 0, 255, 1)",
+                        "rgba(0, 128, 128, 1)",
+                        "rgba(255, 0, 255, 1)",
+                        "rgba(192, 192, 192, 1)",
+                        "rgba(0, 128, 0, 1)",
+                        "rgba(0, 0, 128, 1)"
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                scales: {
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
+    }  
+</script>
+
+		
+
+
+		
+	</div>
+
+</body>
+</html>

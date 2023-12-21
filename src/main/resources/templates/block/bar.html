@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<head>
+	
+<meta charset="UTF-8">
+<link th:href="@{/css/bar.css}" rel="stylesheet">
+<script th:src="@{/js/bar.js}"></script>
+
+</head>
+<body>
+
+<div th:fragment="bar">	
+	<div class="topbar">
+        ForestLink
+    </div>
+    <div class="sidebar closed" id="sidebar">
+        <div class="toggle-button" id="toggle-button" onclick="toggleSidebar()">&#9776;</div>
+        <div class="close-button" id="close-button" onclick="toggleSidebar()">&#x2716;</div>
+        <div class="content-container">
+            <ul class="menu">
+				<li><a th:href="@{/home}">ホーム(ダッシュボード)</a></li>
+				<li><a th:href="@{/stock}">在庫一覧</a></li>
+				<li><a th:href="@{/archiveStock}">アーカイブ済み在庫一覧</a></li>
+				<li><a th:href="@{/product}">製品一覧</a></li>
+				<li><a th:href="@{/entryTrading}">参加企業内取引一覧</a></li>
+				<li><a th:href="@{/purchaseTrading}">外部取引先企業購買一覧</a></li>
+				<li><a th:href="@{/salesTrading}">外部取引先企業販売一覧</a></li>
+				<li><a th:href="@{/entryEnterprise}">参加企業一覧</a></li>
+				<li><a th:href="@{/user}">ユーザー一覧</a></li>
+				<li><a th:href="@{/partnerEnterprise}">外部取引先企業一覧</a></li>
+				<li><a th:href="@{/partnerUser}">外部取引先人材一覧</a></li>
+                <li sec:authorize="hasAuthority('admin')"><a th:href="@{/masterData}">マスターデータ管理</a></li>
+                <li><a th:href="@{/loginUserDetail}">ログインユーザー詳細</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>

@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+
+<head>
+    <meta charset="UTF-8">
+    <title>マスターデータ項目一覧</title>
+
+    <link rel="icon" th:href="@{/icon/ForestLink.ico}">
+    <link th:href="@{/css/content.css}" rel="stylesheet">
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet">
+    <link th:href="@{/css/logout.css}" rel="stylesheet" type="text/css">
+    <link th:href="@{/css/detail.css}" rel="stylesheet">
+    
+</head>
+
+<body>
+
+    <div th:replace="~{block/bar}"></div>
+    <div class="content">
+		
+		<div class="left">
+			<h3><b>マスターデータ項目一覧</b></h3>
+		</div>
+		
+		<div class="masterData">
+			<div class="card" style="width: 30rem;" th:object="${userDetail}">
+  				<ul class="list-group list-group-flush">
+    				<li class="list-group-item">
+						<a type="button" th:href="@{/masterData/businessType}" class="btn btn-outline-success w-100">事業区部一覧</a>
+					</li>
+					<li class="list-group-item">
+						<a type="button" th:href="@{/masterData/partnerenterpriserank}" class="btn btn-outline-success w-100">取引先ランク一覧</a>
+					</li>
+					<li class="list-group-item">
+						<a type="button" th:href="@{/masterData/worktype}" class="btn btn-outline-success w-100">活動種別一覧</a>
+					</li>
+					<li class="list-group-item">
+						<a type="button" th:href="@{/masterData/contactmethod}" class="btn btn-outline-success w-100">連絡手段一覧</a>
+					</li>
+					<li class="list-group-item">
+						<a type="button" th:href="@{/masterData/producttype}" class="btn btn-outline-success w-100">製品種別一覧</a>
+					</li>
+					<li class="list-group-item">
+						<a type="button" th:href="@{/masterData/breed}" class="btn btn-outline-success w-100">品種一覧</a>
+					</li>
+					<li class="list-group-item">
+						<a type="button" th:href="@{/masterData/stockstatus}" class="btn btn-outline-success w-100">在庫状態一覧</a>
+					</li>
+  				</ul>
+			</div>
+		</div>
+				
+	</div>
+
+</body>
+
+</html>
